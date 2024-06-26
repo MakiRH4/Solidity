@@ -4,6 +4,8 @@
 // It will be used by the Solidity compiler to validate its version.
 pragma solidity ^0.8.0;
 
+import "hardhat/console.sol";
+
 
 // This is the main building block for smart contracts.
 contract Token {
@@ -45,7 +47,13 @@ contract Token {
         // If `require`'s first argument evaluates to `false`, the
         // transaction will revert.
         require(balances[msg.sender] >= amount, "Not enough tokens");
-
+		console.log(
+			//when trying to use unicode chars, unicode"the string with special chars"
+			unicode"Übertragung von %s zu %s %s tokens",
+			msg.sender,
+			to,
+			amount
+		);
         // Transfer the amount.
         balances[msg.sender] -= amount;
         balances[to] += amount;
