@@ -19,7 +19,7 @@ module.exports = {
   solidity: "0.8.24",
   networks: {
     sepolia: {
-      url: `https://api-sepolia.etherscan.io/api?apiKey=${ETHERSCAN_API_KEY}`,
+      url: `https://ethereum-sepolia-rpc.publicnode.com`,
       accounts: [SEPOLIA_PRIVATE_KEY],
     },
   },
