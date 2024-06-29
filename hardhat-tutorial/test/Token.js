@@ -5,6 +5,7 @@
 
 // We import Chai to use its asserting functions here.
 const { expect } = require("chai");
+const Web3 = require('web3');
 
 // We use `loadFixture` to share common setups (or fixtures) between tests.
 // Using this simplifies your tests and makes them run faster, by taking
@@ -12,6 +13,25 @@ const { expect } = require("chai");
 const {
   loadFixture,
 } = require("@nomicfoundation/hardhat-toolbox/network-helpers");
+
+const infuraEndpoint = 'https://ethereum-sepolia-rpc.publicnode.com'; // Replace with your Infura Project ID
+
+const web3 = new Web3(new Web3.providers.HttpProvider(infuraEndpoint));
+
+describe("Gas Price Check", function() {
+    it("should fetch gas price", async function() {
+        try {
+            // Get the current gas price
+            const gasPrice = await web3.eth.getGasPrice();
+
+            console.log('Current gas price (in wei):', gasPrice);
+            console.log('Current gas price (in Gwei):', web3.utils.fromWei(gasPrice, 'gwei'));
+        } catch (error) {
+            console.error('Error fetching gas price:', error);
+            throw error; // Throw the error to fail the test if fetching gas price fails
+        }
+    });
+});
 
 // `describe` is a Mocha function that allows you to organize your tests.
 // Having your tests organized makes debugging them easier. All Mocha
