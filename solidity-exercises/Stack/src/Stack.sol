@@ -20,6 +20,30 @@ contract Stack {
     constructor(uint256[] memory _stack) {
         stack = _stack;
     }
-
-    // your code here
+	//a.
+    function push(uint256 newValue) public {
+		stack.push(newValue);
+	}
+	//b.
+	function peek() public view returns (uint256 lastElement) {
+		require(stack.length > 0, "Stack is empty");
+		lastElement = stack[stack.length -1];
+		return lastElement;
+	}
+	//c.
+	function pop() public returns (uint256 lastElement) {
+		require(stack.length > 0, "Stack is empty");
+		lastElement = stack[stack.length - 1];
+		stack.pop();
+		return lastElement;
+	}
+	//d.
+	function size() public view returns (uint256) {
+		return stack.length;
+	}
+	//e.
+	function getStack() public view returns (uint256[] memory) {
+	//	fullStack = stack;
+		return stack;
+	}
 }
