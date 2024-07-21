@@ -41,3 +41,35 @@ contract ExampleContract {
         name = newName;
     }
 }
+
+//only the banker can change the balance due to the if statement, but anyone can view balances
+contract ERC20Token {
+    address public banker = 0x5B38Da6a701c568545dCfcB03FcB875f56beddC4;
+
+    mapping(address => uint256) public balances;
+
+    function setSomeonesBalance(address owner, uint256 amount) public {
+        if (msg.sender == banker) {
+            balances[owner] = amount;
+        }
+        // do nothing
+    }
+
+    function transferTokensBetweenAddresses(address sender, address receiver, uint256 amount) public {
+        if (msg.sender == banker) {
+            balances[sender] -= amount;   // deduct/debit the sender's balance
+            balances[receiver] += amount; // credit the reciever's balance
+        }
+        // do nothing
+    }
+}
+
+//a smart contract's own address
+contract ExampleContract {
+    function whoami() public view returns (address) {
+        return address(this);
+    }
+}
+
+//calldata cannot be used in constructor arguments
+//constructors cannot return values
