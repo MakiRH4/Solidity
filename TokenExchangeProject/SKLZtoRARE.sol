@@ -42,7 +42,7 @@ contract SkillzCoin {
         _totalSupply -= amount;
     }
 
-    //used to transfer token between accounts, can not transfer to address(0), only token owner can transfer
+    //used to transfer tokens between accounts, can not transfer to address(0), only token owner can transfer
     function transfer(address to, uint256 amount) external {
         require(to != address(0), "unable to transfer tokens to 0x0");
         require(balanceOf[msg.sender] >= amount);
@@ -78,12 +78,18 @@ contract RareCoin {
     function setBalance(address OxSkillzCoin, address from) external {
         (bool ok, bytes memory result) = OxSkillzCoin.call(abi.encodeWithSignature("getBalance(address)", from));
         require(ok, "calling getBalance failed");
+        
 
         uint256 funds = abi.decode(result, (uint256));
-        balanceOf[from] = funds;
+        (bool burn_check, ) = OxSkillzCoin.call(abi.encodeWithSignature("burn(uint256)", funds));
+        
+        require(burn_check, "burn call failed");
+        balanceOf[from] += funds;
         _totalSupply += funds;
         
     }
+
+    //ANYONE CAN MINT, FIX IT!!
     //used to mint RARE, can only mint by burning SKLZ from SkillzCoin
     function mint(/* address OxSkillzCoin, */ address from, uint256 amount) external {
         //check SKLZ ballance
