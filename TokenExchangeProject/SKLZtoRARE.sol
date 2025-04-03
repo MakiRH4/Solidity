@@ -103,7 +103,7 @@ contract RareCoin {
         _mint(from, amount);
 
         }
-    //////////////is this safe? or _mint can be called by another contract that inherits from this one, thus creating "free" tokens?
+    
     //core mint function, creates tokens and updates totalSupply, ther is no a MAXsupply
     function _mint(address to, uint256 amount) internal {
         require(to != address(0), "can not mint to 0x0");
